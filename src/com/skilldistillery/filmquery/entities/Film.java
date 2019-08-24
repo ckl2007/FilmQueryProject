@@ -1,25 +1,28 @@
 package com.skilldistillery.filmquery.entities;
 
+import java.util.List;
+
 public class Film {
 	private int id;
 	private String title;
 	private String description;
 	private int release_year;
-	private int language_id;
+	private String language;
 	private int rental_duration;
 	private double rental_rate;
 	private int length;
 	private double replacement_cost;
 	private String rating;
 	private String special_features;
-	
-	public Film(int id, String title, String description, int release_year, int language_id, int rental_duration,
+	private List<Actor> actors;
+
+	public Film(int id, String title, String description, int release_year, String language_id, int rental_duration,
 			double rental_rate, int length, double replacement_cost, String rating, String special_features) {
 		this.id = id;
 		this.title = title;
 		this.description = description;
 		this.release_year = release_year;
-		this.language_id = language_id;
+		this.language = language_id;
 		this.rental_duration = rental_duration;
 		this.rental_rate = rental_rate;
 		this.length = length;
@@ -27,8 +30,9 @@ public class Film {
 		this.rating = rating;
 		this.special_features = special_features;
 	}
-	
-	public Film() {}
+
+	public Film() {
+	}
 
 	public int getId() {
 		return id;
@@ -62,12 +66,12 @@ public class Film {
 		this.release_year = release_year;
 	}
 
-	public int getLanguage_id() {
-		return language_id;
+	public String getLanguage() {
+		return language;
 	}
 
-	public void setLanguage_id(int language_id) {
-		this.language_id = language_id;
+	public void setLanguage(String language) {
+		this.language = language;
 	}
 
 	public int getRental_duration() {
@@ -118,14 +122,30 @@ public class Film {
 		this.special_features = special_features;
 	}
 
+	public List<Actor> getActors() {
+		return actors;
+	}
+
+	public void setActors(List<Actor> actors) {
+		this.actors = actors;
+	}
+
+	public String methodString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Film: title=").append(title).append(", description=").append(description)
+				.append(", release_year=").append(release_year).append(", rating=").append(rating)
+				.append(", film language=").append(language).append("\n\n");
+		return builder.toString();
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("Film [title=").append(title).append(", description=").append(description)
+		builder.append("Film: title=").append(title).append(", description=").append(description)
 				.append(", release_year=").append(release_year).append(", rental_duration=").append(rental_duration)
 				.append(", rental_rate=").append(rental_rate).append(", length=").append(length)
 				.append(", replacement_cost=").append(replacement_cost).append(", rating=").append(rating)
-				.append(", special_features=").append(special_features).append("]");
+				.append(", special_features=").append(special_features).append("]" + "\n\n");
 		return builder.toString();
 	}
 
@@ -135,7 +155,7 @@ public class Film {
 		int result = 1;
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + id;
-		result = prime * result + language_id;
+		result = prime * result + ((language == null) ? 0 : language.hashCode());
 		result = prime * result + length;
 		result = prime * result + ((rating == null) ? 0 : rating.hashCode());
 		result = prime * result + release_year;
@@ -166,7 +186,10 @@ public class Film {
 			return false;
 		if (id != other.id)
 			return false;
-		if (language_id != other.language_id)
+		if (language == null) {
+			if (other.language != null)
+				return false;
+		} else if (!language.equals(other.language))
 			return false;
 		if (length != other.length)
 			return false;
@@ -195,8 +218,5 @@ public class Film {
 			return false;
 		return true;
 	}
-	
-	
-	
 
 }
