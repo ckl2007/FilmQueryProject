@@ -15,6 +15,7 @@ public class Film {
 	private String rating;
 	private String special_features;
 	private List<Actor> actors;
+	private String category;
 
 	public Film(int id, String title, String description, int release_year, String language_id, int rental_duration,
 			double rental_rate, int length, double replacement_cost, String rating, String special_features) {
@@ -130,11 +131,19 @@ public class Film {
 		this.actors = actors;
 	}
 
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
 	public String methodString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("Film: title=").append(title).append(", description=").append(description)
 				.append(", release_year=").append(release_year).append(", rating=").append(rating)
-				.append(", film language=").append(language).append("\n\n");
+				.append(", film language=").append(language).append(", Category=").append(category).append("\n\n");
 		return builder.toString();
 	}
 
@@ -144,8 +153,8 @@ public class Film {
 		builder.append("Film: title=").append(title).append(", description=").append(description)
 				.append(", release_year=").append(release_year).append(", rental_duration=").append(rental_duration)
 				.append(", rental_rate=").append(rental_rate).append(", length=").append(length)
-				.append(", replacement_cost=").append(replacement_cost).append(", rating=").append(rating)
-				.append(", special_features=").append(special_features).append("]" + "\n\n");
+				.append(", replacement_cost=").append(replacement_cost).append(", rating=").append(rating).append(", Category=")
+				.append(category).append(", special_features=").append(special_features).append("]" + "\n\n");
 		return builder.toString();
 	}
 
