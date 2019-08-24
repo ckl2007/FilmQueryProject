@@ -46,13 +46,13 @@ public class FilmQueryApp {
 
 		printMenu1();
 		choice = chooseCatch(kb);
-		
+
 		switch (choice) {
 		case 1:
-			searchFilmMenu(choice, kb);
+			searchFilmMenu(kb);
 			break;
 		case 2:
-			searchActorMenu(choice, kb);
+			searchActorMenu(kb);
 			break;
 		}
 
@@ -63,7 +63,7 @@ public class FilmQueryApp {
 		do {
 			try {
 				choice = kb.nextInt();
-				if(choice > 2) {
+				if (choice > 2) {
 					System.out.println("Please only input a correct choice");
 					choice = kb.nextInt();
 				}
@@ -73,7 +73,7 @@ public class FilmQueryApp {
 				kb.next();
 			}
 		} while (true);
-		
+
 		return choice;
 	}
 
@@ -97,7 +97,7 @@ public class FilmQueryApp {
 
 	}
 
-	private void searchFilmMenu(int choice, Scanner kb) {
+	private void searchFilmMenu(Scanner kb) {
 		System.out.println("+-----+-------------+");
 		System.out.println("|   Find Film by    |");
 		System.out.println("+-----+-------------+");
@@ -106,18 +106,20 @@ public class FilmQueryApp {
 		System.out.println("|  1. | By Film ID  |");
 		System.out.println("|  2. | By Keyword  |");
 		System.out.println("+-----+-------------+");
-		choice = chooseCatch(kb);
+		Film film = null;
+		int choice = chooseCatch(kb);
 		switch (choice) {
 		case 1:
 			System.out.print("Please enter the Film ID you'd like to search by: ");
 			int filmID = kb.nextInt();
-			Film film = db.findFilmById(filmID);
+			film = db.findFilmById(filmID);
 			if (film == null) {
 				System.out.println("Your search returned nothing");
-			}else {
-				//If the film is found, its title, year, rating, and description are displayed
+			} else {
+				// If the film is found, its title, year, rating, and description are displayed
 				System.out.println(film.methodString());
 			}
+			filmSubMenu(film, kb);
 			break;
 		case 2:
 			System.out.print("Please enter the Keyword you'd like to search by: ");
@@ -125,16 +127,17 @@ public class FilmQueryApp {
 			List<Film> films = db.findFilmsByWord(keyword);
 			if (films == null) {
 				System.out.println("Your search returned nothing");
-			}else {
+			} else {
 				for (Film film2 : films) {
 					System.out.println(film2.methodString());
 				}
 			}
+			filmSubMenu(film, kb);
 			break;
 		}
 	}
 
-	private void searchActorMenu(int choice, Scanner kb) {
+	private void searchActorMenu(Scanner kb) {
 		System.out.println("+-----+-------------+");
 		System.out.println("|   Find Actor by   |");
 		System.out.println("+-----+-------------+");
@@ -143,7 +146,7 @@ public class FilmQueryApp {
 		System.out.println("|  1. | By Film  ID |");
 		System.out.println("|  2. | By Actor ID |");
 		System.out.println("+-----+-------------+");
-		choice = chooseCatch(kb);
+		int choice = chooseCatch(kb);
 		switch (choice) {
 		case 1:
 			System.out.print("Please enter the Film ID you'd like to search by: ");
@@ -151,7 +154,7 @@ public class FilmQueryApp {
 			List<Actor> actors = db.findActorsByFilmId(filmID);
 			if (actors == null) {
 				System.out.println("Your search returned nothing");
-			}else {
+			} else {
 				printActorList(actors);
 			}
 			break;
@@ -161,7 +164,7 @@ public class FilmQueryApp {
 			Actor actor = db.findActorById(actorID);
 			if (actor == null) {
 				System.out.println("Your search returned nothing");
-			}else {
+			} else {
 				System.out.println(actor);
 			}
 			break;
@@ -177,7 +180,7 @@ public class FilmQueryApp {
 		System.out.println("                        +-----+-----------+");
 
 	}
-	
+
 	private void printActorList(List<Actor> actors) {
 		String alignFormat = "| %-4d| %-11s | %-12s |%n";
 		System.out.println("+-----+-------------+--------------+");
@@ -189,10 +192,31 @@ public class FilmQueryApp {
 			int id = actor.getId();
 			String fname = actor.getFirstName();
 			String lname = actor.getLastName();
-				System.out.printf(alignFormat, id, fname, lname  );
-				
-			}
+			System.out.printf(alignFormat, id, fname, lname);
+
+		}
 		System.out.println("+-----+-------------+--------------+");
 	}
 
+	private void filmSubMenu(Film film, Scanner kb) {
+//		System.out.println("+-----+-------------+");
+//		System.out.println("|   Find Actor by   |");
+
+		System.out.println("+-----+-----------------------------+");
+		System.out.println("| Num |             Desc            |");
+		System.out.println("+-----+-----------------------------+");
+		System.out.println("|  1. | View ALL the film details   |");
+		System.out.println("|  2. | Return to Main              |");
+		System.out.println("+-----+-----------------------------+");
+
+		int choice = chooseCatch(kb);
+		switch (choice) {
+		case 1:
+			System.out.println(film.toString());
+			break;
+		case 2:
+			startUserInterface(kb);
+			break;
+		}
+	}
 }
