@@ -151,7 +151,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 		return actors;
 	}
 
-	public Map<Integer, Map<Integer, String>> inventoryMaps(int filmId) {
+	private Map<Integer, Map<Integer, String>> inventoryMaps(int filmId) {
 		Map<Integer, Map<Integer, String>> locsInventory = new HashMap<>();
 		Map<Integer, String> invIdMedia = new HashMap<>();
 		Set<Integer> storeSet = new HashSet<>();
@@ -183,6 +183,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 		} catch (SQLException e) {
 			System.err.println(e);
 		}
+		locsInventory.remove(0);
 		return locsInventory;
 	}
 

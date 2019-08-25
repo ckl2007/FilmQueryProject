@@ -9,24 +9,24 @@ import com.skilldistillery.filmquery.database.DatabaseAccessorObject;
 import com.skilldistillery.filmquery.entities.Actor;
 import com.skilldistillery.filmquery.entities.Film;
 
-@SuppressWarnings("unused")
 public class FilmQueryApp {
 
 	DatabaseAccessor db = new DatabaseAccessorObject();
 
 	public static void main(String[] args) {
 		FilmQueryApp app = new FilmQueryApp();
-    app.test();
-//		app.launch();
+//		app.test();
+		app.launch();
 	}
 
+	@SuppressWarnings("unused")
 	private void test() {
-    Film film = db.findFilmById(23);
+//    Film film = db.findFilmById(23);
 //    List<Film> films = db.findFilmsByWord("dino");
 //    Actor act = db.findActorById(4);
 //    List<Actor> list = db.findActorsByFilmId(23);
 //    System.out.println(films);
-    System.out.println(film.getLocationsWithCondition());
+//    System.out.println(film.getLocationsWithCondition());
 //    System.out.println(act);
 //    printActorList(list);
 	}
@@ -36,11 +36,9 @@ public class FilmQueryApp {
 
 		startUserInterface(kb);
 
-		kb.close();
 	}
 
 	private void startUserInterface(Scanner kb) {
-		boolean keepGoing = true;
 		int choice = 0;
 		printBb();
 
@@ -54,6 +52,9 @@ public class FilmQueryApp {
 		case 2:
 			searchActorMenu(kb);
 			break;
+		case 3:
+			kb.close();
+			break;
 		}
 
 	}
@@ -63,7 +64,7 @@ public class FilmQueryApp {
 		do {
 			try {
 				choice = kb.nextInt();
-				if (choice > 2) {
+				if (choice > 3) {
 					System.out.println("Please only input a correct choice");
 					choice = kb.nextInt();
 				}
@@ -177,6 +178,7 @@ public class FilmQueryApp {
 		System.out.println("                        +-----+-----------+");
 		System.out.println("                        |  1. |   Film    |");
 		System.out.println("                        |  2. |   Actor(s)|");
+		System.out.println("                        |  3. |   Exit    |");
 		System.out.println("                        +-----+-----------+");
 
 	}
@@ -199,9 +201,6 @@ public class FilmQueryApp {
 	}
 
 	private void filmSubMenu(Film film, Scanner kb) {
-//		System.out.println("+-----+-------------+");
-//		System.out.println("|   Find Actor by   |");
-
 		System.out.println("+-----+-----------------------------+");
 		System.out.println("| Num |             Desc            |");
 		System.out.println("+-----+-----------------------------+");
@@ -213,6 +212,7 @@ public class FilmQueryApp {
 		switch (choice) {
 		case 1:
 			System.out.println(film.toString());
+			startUserInterface(kb);
 			break;
 		case 2:
 			startUserInterface(kb);

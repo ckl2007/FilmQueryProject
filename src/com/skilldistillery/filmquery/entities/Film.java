@@ -167,7 +167,7 @@ public class Film {
 				.append(rental_rate).append(", length=").append(length).append(", replacement_cost=")
 				.append(replacement_cost).append(", rating=").append(rating).append(", special_features=")
 				.append(special_features).append(", actors=").append(actors).append(", category=").append(category)
-				.append(", locationsWithCondition=").append(locationsWithCondition).append("]\n\n");
+				.append("\n\nLocations With Condition=").append( locationsWithCondition).append("]\n\n");
 		return builder.toString();
 	}
 
