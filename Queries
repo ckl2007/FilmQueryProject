@@ -1,0 +1,64 @@
+private int "id";
+private String "title";
+private String "description";
+private int "release_year";
+private int "language_id";
+private int "rental_duration";
+private double "rental_rate";
+private int "length";
+private double "replacement_cost";
+private String "rating";
+private String "special_features";
+
+select film.id, film.title, film.description, film.release_year, language.name as "Film Language", film.rental_duration, film.rental_rate, film.length, film.replacement_cost, film.rating, film.special_features, category.name from film
+  JOIN film_category on film.id = film_category.film_id
+  JOIN language on film.language_id = language.id
+  JOIN category on film_category.category_id = category.id where film.id = ?
+
+Implement the findFilmById method that takes an int film ID, and returns a Film object (or null, if the film ID returns no data.)
+
+SELECT * FROM film JOIN film_category on film.id = film_category.film_id
+                                    JOIN category on film_category.category_id = category.id
+                                    where film.id= ?
+
+Implement findActorById method that takes an int actor ID, and returns an Actor object (or null, if the actor ID returns no data.)
+
+SELECT * from actor where actor.id = ?
+
+Implement findActorsByFilmId with an appropriate List implementation that will be populated using a ResultSet and returned.
+
+SELECT actor.id, actor.first_name, actor.last_name from actor JOIN film_actor on actor.id = film_actor.actor_id where film_actor.film_id = ?
+
+
+
+
+select film.id
+  , film.title
+  , film.rating
+  , category.name from film
+  JOIN language on film.language_id = language.id
+  JOIN film_category on film.id = film_category.film_id
+  JOIN category on film_category.category_id = category.id where film.title like '%dino%';
+
+  Goal 3
+  When viewing film details, the user will see a list of all copies of the film in inventory, with their condition.
+
+  select film.id
+  , film.title
+  , film.description
+  , film.release_year
+  , language.name as "Film Language"
+  , film.rental_duration
+  , film.rental_rate
+  , film.length
+  , film.replacement_cost
+  , film.rating
+  , film.special_features
+  , category.name
+  , inventory_item. store_id
+  , inventory_item.media_condition
+  from film
+  JOIN film_category on film.id = film_category.film_id
+  JOIN language on film.language_id = language.id
+  JOIN category on film_category.category_id = category.id
+  JOIN inventory_item on film.id = inventory_item.film_id where film.id =
