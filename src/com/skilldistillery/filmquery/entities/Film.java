@@ -1,6 +1,8 @@
 package com.skilldistillery.filmquery.entities;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Film {
 	private int id;
@@ -16,6 +18,7 @@ public class Film {
 	private String special_features;
 	private List<Actor> actors;
 	private String category;
+	private Map<Integer, Map<Integer, String>> locationsWithCondition = new HashMap<>();
 
 	public Film(int id, String title, String description, int release_year, String language_id, int rental_duration,
 			double rental_rate, int length, double replacement_cost, String rating, String special_features) {
@@ -139,6 +142,14 @@ public class Film {
 		this.category = category;
 	}
 
+	public Map<Integer, Map<Integer, String>> getLocationsWithCondition() {
+		return locationsWithCondition;
+	}
+
+	public void setLocationsWithCondition(Map<Integer, Map<Integer, String>> locationsWithCondition) {
+		this.locationsWithCondition = locationsWithCondition;
+	}
+
 	public String methodString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("Film: title=").append(title).append(", description=").append(description)
@@ -150,11 +161,13 @@ public class Film {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("Film: title=").append(title).append(", description=").append(description)
-				.append(", release_year=").append(release_year).append(", rental_duration=").append(rental_duration)
-				.append(", rental_rate=").append(rental_rate).append(", length=").append(length)
-				.append(", replacement_cost=").append(replacement_cost).append(", rating=").append(rating).append(", Category=")
-				.append(category).append(", special_features=").append(special_features).append("]" + "\n\n");
+		builder.append("Film [id=").append(id).append(", title=").append(title).append(", description=")
+				.append(description).append(", release_year=").append(release_year).append(", language=")
+				.append(language).append(", rental_duration=").append(rental_duration).append(", rental_rate=")
+				.append(rental_rate).append(", length=").append(length).append(", replacement_cost=")
+				.append(replacement_cost).append(", rating=").append(rating).append(", special_features=")
+				.append(special_features).append(", actors=").append(actors).append(", category=").append(category)
+				.append(", locationsWithCondition=").append(locationsWithCondition).append("]\n\n");
 		return builder.toString();
 	}
 
@@ -162,10 +175,13 @@ public class Film {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((actors == null) ? 0 : actors.hashCode());
+		result = prime * result + ((category == null) ? 0 : category.hashCode());
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + id;
 		result = prime * result + ((language == null) ? 0 : language.hashCode());
 		result = prime * result + length;
+		result = prime * result + ((locationsWithCondition == null) ? 0 : locationsWithCondition.hashCode());
 		result = prime * result + ((rating == null) ? 0 : rating.hashCode());
 		result = prime * result + release_year;
 		result = prime * result + rental_duration;
@@ -188,6 +204,16 @@ public class Film {
 		if (getClass() != obj.getClass())
 			return false;
 		Film other = (Film) obj;
+		if (actors == null) {
+			if (other.actors != null)
+				return false;
+		} else if (!actors.equals(other.actors))
+			return false;
+		if (category == null) {
+			if (other.category != null)
+				return false;
+		} else if (!category.equals(other.category))
+			return false;
 		if (description == null) {
 			if (other.description != null)
 				return false;
@@ -201,6 +227,11 @@ public class Film {
 		} else if (!language.equals(other.language))
 			return false;
 		if (length != other.length)
+			return false;
+		if (locationsWithCondition == null) {
+			if (other.locationsWithCondition != null)
+				return false;
+		} else if (!locationsWithCondition.equals(other.locationsWithCondition))
 			return false;
 		if (rating == null) {
 			if (other.rating != null)
@@ -228,4 +259,5 @@ public class Film {
 		return true;
 	}
 
-}
+	}
+

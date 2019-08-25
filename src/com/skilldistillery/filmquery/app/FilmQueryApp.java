@@ -16,17 +16,17 @@ public class FilmQueryApp {
 
 	public static void main(String[] args) {
 		FilmQueryApp app = new FilmQueryApp();
-//    app.test();
-		app.launch();
+    app.test();
+//		app.launch();
 	}
 
 	private void test() {
-//    Film film = db.findFilmById(3);
+    Film film = db.findFilmById(23);
 //    List<Film> films = db.findFilmsByWord("dino");
 //    Actor act = db.findActorById(4);
 //    List<Actor> list = db.findActorsByFilmId(23);
 //    System.out.println(films);
-//    System.out.println(film);
+    System.out.println(film.getLocationsWithCondition());
 //    System.out.println(act);
 //    printActorList(list);
 	}

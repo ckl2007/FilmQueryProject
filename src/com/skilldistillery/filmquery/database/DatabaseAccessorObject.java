@@ -7,7 +7,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import com.skilldistillery.filmquery.entities.Actor;
 import com.skilldistillery.filmquery.entities.Film;
@@ -54,6 +58,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 				film.setLanguage(rs.getString(5));
 				film.setCategory(rs.getString("category.name"));
 				film.setActors(findActorsByFilmId(filmId));
+				film.setLocationsWithCondition(inventoryMaps(film.getId()));
 			}
 
 		} catch (SQLException e) {
@@ -90,6 +95,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 				film.setSpecial_features(rs.getString("special_features"));
 				film.setLanguage(rs.getString("language.name"));
 				film.setCategory(rs.getString("category.name"));
+				film.setLocationsWithCondition(inventoryMaps(film.getId()));
 				films.add(film);
 
 			}
@@ -143,6 +149,41 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 			System.err.println(e);
 		}
 		return actors;
+	}
+
+	public Map<Integer, Map<Integer, String>> inventoryMaps(int filmId) {
+		Map<Integer, Map<Integer, String>> locsInventory = new HashMap<>();
+		Map<Integer, String> invIdMedia = new HashMap<>();
+		Set<Integer> storeSet = new HashSet<>();
+		int oldStore = 0;
+		String sqltxt = "SELECT * from inventory_item where film_id = ?";
+		try (Connection conn = DriverManager.getConnection(URL, user, pass);
+				PreparedStatement stmt = conn.prepareStatement(sqltxt);) {
+			stmt.setInt(1, filmId);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				int invID = rs.getInt(1);
+				String mediaCond = rs.getString(4);
+				int storeID = rs.getInt(3);
+				if (storeSet.contains(storeID)) {
+					invIdMedia.put(invID, mediaCond);
+					oldStore = storeID;
+					
+				} else {
+					locsInventory.put(oldStore, invIdMedia);
+					storeSet.add(storeID);
+					invIdMedia = new HashMap<>();
+					invIdMedia.put(invID, mediaCond);
+
+				}
+
+			}
+			locsInventory.put(oldStore, invIdMedia);
+			
+		} catch (SQLException e) {
+			System.err.println(e);
+		}
+		return locsInventory;
 	}
 
 }
