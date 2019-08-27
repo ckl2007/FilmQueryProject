@@ -132,7 +132,7 @@ public class FilmQueryApp {
 					System.out.println(film2.methodString());
 				}
 			}
-			filmSubMenu(film, kb);
+			filmSubMenu(films, kb);
 			break;
 		}
 	}
@@ -211,6 +211,27 @@ public class FilmQueryApp {
 		switch (choice) {
 		case 1:
 			System.out.println(film.toString());
+			startUserInterface(kb);
+			break;
+		case 2:
+			startUserInterface(kb);
+			break;
+		}
+	}
+	private void filmSubMenu(List<Film> films, Scanner kb) {
+		System.out.println("+-----+-----------------------------+");
+		System.out.println("| Num |             Desc            |");
+		System.out.println("+-----+-----------------------------+");
+		System.out.println("|  1. | View ALL the film details   |");
+		System.out.println("|  2. | Return to Main              |");
+		System.out.println("+-----+-----------------------------+");
+		
+		int choice = chooseCatch(kb);
+		switch (choice) {
+		case 1:
+			for (Film film : films) {
+				System.out.println(film.toString());
+			}
 			startUserInterface(kb);
 			break;
 		case 2:
