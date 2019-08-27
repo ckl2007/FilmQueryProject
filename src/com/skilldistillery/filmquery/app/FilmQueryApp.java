@@ -19,8 +19,7 @@ public class FilmQueryApp {
 		app.launch();
 	}
 
-	@SuppressWarnings("unused")
-	private void test() {
+//	private void test() {
 //    Film film = db.findFilmById(23);
 //    List<Film> films = db.findFilmsByWord("dino");
 //    Actor act = db.findActorById(4);
@@ -29,7 +28,7 @@ public class FilmQueryApp {
 //    System.out.println(film.getLocationsWithCondition());
 //    System.out.println(act);
 //    printActorList(list);
-	}
+//	}
 
 	private void launch() {
 		Scanner kb = new Scanner(System.in);
@@ -51,7 +50,7 @@ public class FilmQueryApp {
 			break;
 		case 2:
 			searchActorMenu(kb);
-			break;
+			break;      
 		case 3:
 			kb.close();
 			break;
@@ -126,7 +125,7 @@ public class FilmQueryApp {
 			System.out.print("Please enter the Keyword you'd like to search by: ");
 			String keyword = kb.next();
 			List<Film> films = db.findFilmsByWord(keyword);
-			if (films == null) {
+			if (films.isEmpty()) {
 				System.out.println("Your search returned nothing");
 			} else {
 				for (Film film2 : films) {
