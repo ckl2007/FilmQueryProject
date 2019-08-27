@@ -169,7 +169,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 				if (storeSet.contains(storeID)) {
 					invIdMedia.put(invID, mediaCond);
 					oldStore = storeID;
-					
+
 				} else {
 					locsInventory.put(oldStore, invIdMedia);
 					storeSet.add(storeID);
@@ -180,7 +180,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 
 			}
 			locsInventory.put(oldStore, invIdMedia);
-			
+
 		} catch (SQLException e) {
 			System.err.println(e);
 		}
